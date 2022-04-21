@@ -56,10 +56,12 @@ function exportaJSON(){
     console.log(produtosFinal);
 }
 
-function validaEstoque(){
-    var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));
-    console.log(produtosFinal);
+function  imprimeOrdemAlfabetica(){
     
+}
+
+function validaEstoque(){
+    var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));    
     let w = 0, x = 0, y = 0, z = 0;
     produtosFinal.forEach(function(produto){
         if(produto.category == 'Panelas'){
@@ -82,6 +84,5 @@ function validaEstoque(){
 }
 
 exportaJSON();
+console.log('\nValidando estoque...');
 validaEstoque();
-
-

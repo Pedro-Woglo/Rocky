@@ -34,7 +34,7 @@ function concertaPrecoJSON(produtos){
 
 function concertaQuantidadeJSON (produtos){
     produtos.forEach(function(produto){
-        if(produtos.quantity == undefined){
+        if(produto.quantity == undefined){
             produto.quantity = 0;
         }
     })
@@ -44,8 +44,8 @@ function concertaQuantidadeJSON (produtos){
 function exportaJSON(){
     const fs = require('fs');
     var produtos1 = concertaNomeJSON();
-    var produtos2 = concertaPrecoJSON(produtos1);
-    var produtosFinal = concertaQuantidadeJSON(produtos2);
+    var produtos2 = concertaQuantidadeJSON(produtos1);
+    var produtosFinal = concertaPrecoJSON(produtos2);
 
     try{
         const saida = JSON.stringify(produtosFinal);
@@ -57,12 +57,11 @@ function exportaJSON(){
 }
 
 function validaEstoque(){
-    var produtos = concertaPrecoJSON();
-    var produtosFinal = concertaQuantidadeJSON(produtos);
+    var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));
     console.log(produtosFinal);
     
     let w = 0, x = 0, y = 0, z = 0;
-    produtos.forEach(function(produto){
+    produtosFinal.forEach(function(produto){
         if(produto.category == 'Panelas'){
             w += produto.price * produto.quantity;
         }
@@ -83,5 +82,6 @@ function validaEstoque(){
 }
 
 exportaJSON();
+validaEstoque();
 
 

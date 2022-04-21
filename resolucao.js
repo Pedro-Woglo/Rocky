@@ -18,7 +18,7 @@ function concertaNomeJSON(){
     newString = newString.replace(/ø/g, "o");
     newString = newString.replace(/ß/g, "b");
     produto.name = newString;
-    })
+    });
     return produtos;
 }
 
@@ -28,7 +28,7 @@ function concertaPrecoJSON(produtos){
         if(typeof produto.price == typeof aux){
             produto.price = Number(produto.price);
         }
-    })
+    });
     return produtos;
 }
 
@@ -37,11 +37,12 @@ function concertaQuantidadeJSON (produtos){
         if(produto.quantity == undefined){
             produto.quantity = 0;
         }
-    })
+    });
     return produtos;
 }
 
 function exportaJSON(){
+    console.log('JSON exportado:');
     const fs = require('fs');
     var produtos1 = concertaNomeJSON();
     var produtos2 = concertaQuantidadeJSON(produtos1);
@@ -56,11 +57,28 @@ function exportaJSON(){
     console.log(produtosFinal);
 }
 
-function  imprimeOrdemAlfabetica(){
-    
+function  imprimeNomeOrdemAlfabetica(){
+    console.log('\nImprimindo nome dos produtos na ordem requisitada:');
+    var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));    
+    var nomeProdutos = [];
+    var aux = '';
+    produtosFinal.forEach(function(produto){
+        aux = produto.category + ': id (' + produto.id + ') - ' + produto.name;
+        nomeProdutos.push(aux);
+    });
+    nomeProdutos.sort(function(a, b) {
+        if(a < b){
+            return -1;
+        }
+        else{
+            return true;
+        }
+    });
+    console.log(nomeProdutos);
 }
 
 function validaEstoque(){
+    console.log('\nValidando estoque...');
     var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));    
     let w = 0, x = 0, y = 0, z = 0;
     produtosFinal.forEach(function(produto){
@@ -76,7 +94,7 @@ function validaEstoque(){
         if(produto.category == 'Acessórios'){
             z += produto.price * produto.quantity;
         }
-    })
+    });
     console.log('Valor do estoque das panelas:', w);
     console.log('Valor do estoque dos eletrodomésticos:', x);
     console.log('Valor do estoque dos eletrônicos:', y);
@@ -84,5 +102,5 @@ function validaEstoque(){
 }
 
 exportaJSON();
-console.log('\nValidando estoque...');
 validaEstoque();
+imprimeNomeOrdemAlfabetica();

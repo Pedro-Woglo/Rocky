@@ -44,10 +44,8 @@ function concertaQuantidadeJSON (produtos){
 function exportaJSON(){
     console.log('JSON exportado:');
     const fs = require('fs');
-    var produtos1 = concertaNomeJSON();
-    var produtos2 = concertaQuantidadeJSON(produtos1);
-    var produtosFinal = concertaPrecoJSON(produtos2);
-
+    var produtosFinal = concertaQuantidadeJSON(concertaPrecoJSON(concertaNomeJSON()));    
+    
     try{
         const saida = JSON.stringify(produtosFinal);
         fs.writeFileSync('./saida.json', saida);
